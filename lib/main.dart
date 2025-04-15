@@ -16,6 +16,7 @@ class VerticalFactory extends StatelessWidget {
       title: 'Vertical Factory',
       theme: ThemeData(scaffoldBackgroundColor: const Color(0xFFF7F7F9)),
       initialRoute: '/',
+      // NOTE(hajae): Routes Setting
       routes: {
         '/': (context) => const VerticalFactoryScreen(),
         '/signin': (context) => const SigninScreen(),
@@ -37,7 +38,7 @@ class _VerticalFactoryScreenState extends State<VerticalFactoryScreen> {
       context: context,
       barrierDismissible: true,
       barrierLabel: 'Dismiss',
-      barrierColor: Colors.black.withOpacity(0.5),
+      barrierColor: Colors.black.withValues(alpha: 128),
       transitionDuration: const Duration(milliseconds: 300),
       pageBuilder: (_, __, ___) => const SizedBox.shrink(),
       transitionBuilder: (_, animation, __, ___) {
@@ -74,7 +75,7 @@ class _VerticalFactoryScreenState extends State<VerticalFactoryScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text('Hello world'),
-            const SizedBox(height: 20), // 텍스트와 버튼 사이 간격
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/signin');
