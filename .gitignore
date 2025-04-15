@@ -1,0 +1,78 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+# VS Code settings (보통은 팀에서 공유하지 않음)
+.vscode/
+
+# macOS 환경에서 생길 수 있는 파일
+Icon?
+*.DS_Store
+
+# Windows 환경에서 생길 수 있는 파일
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux 환경에서 생길 수 있는 파일
+*~
+
+# Crashlytics/Performance tool 사용 시 생길 수 있는 파일
+firebase_app_id_file.json
+
+# iOS 관련 빌드 캐시
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/.generated/
+ios/Flutter/App.framework
+
+# web build
+/web/.dart_tool/
+/web/build/
+
+# generated localization files (만약 사용하는 경우)
+/lib/l10n/*.dart
