@@ -32,8 +32,31 @@ class _SigninScreenState extends State<SigninScreen> {
             const SizedBox(height: 24),
             PrimaryButton(
               text: 'Sign In',
-              onPressed: () {
-                viewModel.login(context);
+              onPressed: () async {
+                try {
+                  await viewModel.login();
+
+                  if (!mounted) return;
+                  if (!context.mounted) return;
+
+                  Navigator.pushNamed(context, '/');
+                } catch (e) {
+                  if (!mounted) return;
+                  showDialog(
+                    context: context,
+                    builder:
+                        (_) => AlertDialog(
+                          title: const Text('로그인 실패'),
+                          content: Text(e.toString()),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: const Text('확인'),
+                            ),
+                          ],
+                        ),
+                  );
+                }
               },
             ),
           ],
