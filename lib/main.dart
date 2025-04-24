@@ -38,7 +38,7 @@ class _VerticalFactoryScreenState extends State<VerticalFactoryScreen> {
       context: context,
       barrierDismissible: true,
       barrierLabel: 'Dismiss',
-      barrierColor: Colors.black.withValues(alpha: 128),
+      barrierColor: Colors.black.withValues(alpha: 0.3),
       transitionDuration: const Duration(milliseconds: 300),
       pageBuilder: (_, __, ___) => const SizedBox.shrink(),
       transitionBuilder: (_, animation, __, ___) {
