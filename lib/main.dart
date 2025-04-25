@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:vertical_factory/screens/signin_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
-  runApp(const VerticalFactory());
+
+  final storage = FlutterSecureStorage();
+  final token = await storage.read(key: 'token12');
+
+  runApp(VerticalFactory(isLoggedIn: token != null && token.isNotEmpty));
 }
 
 class VerticalFactory extends StatelessWidget {
-  const VerticalFactory({super.key});
+  final bool isLoggedIn;
+  const VerticalFactory({super.key, required this.isLoggedIn});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Vertical Factory',
       theme: ThemeData(scaffoldBackgroundColor: const Color(0xFFF7F7F9)),
-      initialRoute: '/',
+      initialRoute: isLoggedIn ? '/' : '/signin',
       // NOTE(hajae): Routes Setting
       routes: {
         '/': (context) => const VerticalFactoryScreen(),
