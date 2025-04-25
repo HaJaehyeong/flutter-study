@@ -4,7 +4,7 @@ class AuthResponse {
   final String name;
   final bool success;
   final String token;
-  final String msg;
+  final String? msg;
 
   AuthResponse({
     required this.enterprise,
@@ -12,7 +12,7 @@ class AuthResponse {
     required this.name,
     required this.success,
     required this.token,
-    required this.msg,
+    this.msg,
   });
 
   factory AuthResponse.fromJson(Map<String, dynamic> json) {

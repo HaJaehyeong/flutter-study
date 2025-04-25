@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:vertical_factory/screens/signin_view_model.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:vertical_factory/models/auth_response.dart';
+import 'package:vertical_factory/viewmodels/signin_view_model.dart';
 import 'package:vertical_factory/widgets/custom_text_field.dart';
 import 'package:vertical_factory/widgets/primary_button.dart';
 
@@ -12,10 +14,22 @@ class SigninScreen extends StatefulWidget {
 
 class _SigninScreenState extends State<SigninScreen> {
   final SigninViewModel viewModel = SigninViewModel();
+  final FlutterSecureStorage secureStorage = FlutterSecureStorage();
 
   Future<void> _handleLogin() async {
     try {
-      await viewModel.login();
+      AuthResponse response = await viewModel.login();
+      final now = DateTime.now().millisecondsSinceEpoch;
+
+      await secureStorage.write(key: 'token', value: response.token);
+      await secureStorage.write(key: 'corporate', value: response.enterprise);
+      await secureStorage.write(
+        key: 'corporateId',
+        value: response.enterpriseId.toString(),
+      );
+      await secureStorage.write(key: 'corporateName', value: response.name);
+      await secureStorage.write(key: 'authenticated', value: 'true');
+      await secureStorage.write(key: 'sender', value: '/admin/id:$now');
 
       if (!mounted || !context.mounted) return;
 

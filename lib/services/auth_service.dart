@@ -2,31 +2,7 @@ import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
-
-// NOTE(hajae): Response Class
-class AuthInfo {
-  final String enterprise;
-  final int enterpriseId;
-  final String token;
-  final String name;
-
-  AuthInfo({
-    required this.enterprise,
-    required this.enterpriseId,
-    required this.name,
-    required this.token,
-  });
-
-  // NOTE(hajae): JSON to Object
-  factory AuthInfo.fromJson(Map<String, dynamic> json) {
-    return AuthInfo(
-      enterprise: json['enterprise'],
-      enterpriseId: int.parse(json['enterprise_id'].toString()),
-      name: json['name'],
-      token: json['token'],
-    );
-  }
-}
+import 'package:vertical_factory/models/auth_response.dart';
 
 class AuthService {
   final Dio _dio = Dio(
@@ -36,7 +12,7 @@ class AuthService {
     ),
   );
 
-  Future<AuthInfo> login({
+  Future<AuthResponse> login({
     required String username,
     required String password,
   }) async {
@@ -54,7 +30,7 @@ class AuthService {
         throw Exception(data['message'] ?? 'Login failed');
       }
 
-      return AuthInfo.fromJson(data);
+      return AuthResponse.fromJson(data);
     } on DioException catch (e) {
       throw Exception(e.response?.data['message'] ?? 'Network error');
     }
