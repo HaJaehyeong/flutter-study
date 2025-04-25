@@ -28,7 +28,7 @@ class CustomTextField extends StatelessWidget {
         ),
         floatingLabelStyle: const TextStyle(
           fontWeight: FontWeight.w500,
-          color: Colors.grey,
+          color: Color(0xFF18a0fb),
         ),
         isDense: true,
         enabledBorder: const UnderlineInputBorder(
@@ -38,7 +38,7 @@ class CustomTextField extends StatelessWidget {
           borderSide: BorderSide(color: Color(0xFFee5d50)),
         ),
         focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: Colors.black54, width: 2),
+          borderSide: BorderSide(color: Color(0xFF18a0fb), width: 2),
         ),
       ),
     );

@@ -90,7 +90,7 @@ class _SigninScreenState extends State<SigninScreen> {
                       const Text(
                         'Monitoring for Mobile',
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 22,
                           fontWeight: FontWeight.bold,
                           letterSpacing: 0,
                         ),
