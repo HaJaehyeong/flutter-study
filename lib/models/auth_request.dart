@@ -9,6 +9,6 @@ class AuthRequest {
   }
 
   Map<String, dynamic> toJson() {
-    return {'username': username, 'enterprise_id': password};
+    return {'username': username, 'password': password};
   }
 }
