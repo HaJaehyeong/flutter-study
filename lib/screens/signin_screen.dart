@@ -16,6 +16,20 @@ class _SigninScreenState extends State<SigninScreen> {
   final SigninViewModel viewModel = SigninViewModel();
   final FlutterSecureStorage secureStorage = FlutterSecureStorage();
 
+  @override
+  void initState() {
+    super.initState();
+    _redirectIfLoggedIn();
+  }
+
+  Future<void> _redirectIfLoggedIn() async {
+    final token = await secureStorage.read(key: 'token');
+    if (token != null && token.isNotEmpty) {
+      if (!mounted) return;
+      Navigator.pushReplacementNamed(context, '/');
+    }
+  }
+
   Future<void> _handleLogin() async {
     try {
       AuthResponse response = await viewModel.login();

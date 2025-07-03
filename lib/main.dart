@@ -6,23 +6,17 @@ import 'package:vertical_factory/screens/signin_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
-
-  final storage = FlutterSecureStorage();
-  final token = await storage.read(key: 'token12');
-
-  runApp(VerticalFactory(isLoggedIn: token != null && token.isNotEmpty));
+  runApp(VerticalFactory());
 }
 
 class VerticalFactory extends StatelessWidget {
-  final bool isLoggedIn;
-  const VerticalFactory({super.key, required this.isLoggedIn});
+  const VerticalFactory({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Vertical Factory',
       theme: ThemeData(scaffoldBackgroundColor: const Color(0xFFF7F7F9)),
-      initialRoute: isLoggedIn ? '/' : '/signin',
       // NOTE(hajae): Routes Setting
       routes: {
         '/': (context) => const VerticalFactoryScreen(),
@@ -40,6 +34,8 @@ class VerticalFactoryScreen extends StatefulWidget {
 }
 
 class _VerticalFactoryScreenState extends State<VerticalFactoryScreen> {
+  final storage = FlutterSecureStorage();
+
   void _openSidePanel() {
     showGeneralDialog(
       context: context,
@@ -62,6 +58,13 @@ class _VerticalFactoryScreenState extends State<VerticalFactoryScreen> {
     );
   }
 
+  Future<void> _signout() async {
+    await storage.deleteAll();
+
+    if (!mounted) return;
+    Navigator.pushReplacementNamed(context, '/signin');
+  }
+
   @override
   Widget build(BuildContext context) {
     // NOTE(hajae): Scaffold -> Layout (전체 페이지 틀)
@@ -76,6 +79,9 @@ class _VerticalFactoryScreenState extends State<VerticalFactoryScreen> {
           color: Colors.black,
         ),
         flexibleSpace: const AppBarBottomBorder(),
+        actions: [
+          IconButton(icon: const Icon(Icons.logout), onPressed: _signout),
+        ],
       ),
       body: Center(
         child: Column(
