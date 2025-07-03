@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:vertical_factory/screens/signin_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
-  runApp(const VerticalFactory());
+  runApp(VerticalFactory());
 }
 
 class VerticalFactory extends StatelessWidget {
@@ -15,7 +17,6 @@ class VerticalFactory extends StatelessWidget {
     return MaterialApp(
       title: 'Vertical Factory',
       theme: ThemeData(scaffoldBackgroundColor: const Color(0xFFF7F7F9)),
-      initialRoute: '/',
       // NOTE(hajae): Routes Setting
       routes: {
         '/': (context) => const VerticalFactoryScreen(),
@@ -33,12 +34,14 @@ class VerticalFactoryScreen extends StatefulWidget {
 }
 
 class _VerticalFactoryScreenState extends State<VerticalFactoryScreen> {
+  final storage = FlutterSecureStorage();
+
   void _openSidePanel() {
     showGeneralDialog(
       context: context,
       barrierDismissible: true,
       barrierLabel: 'Dismiss',
-      barrierColor: Colors.black.withValues(alpha: 128),
+      barrierColor: Colors.black.withValues(alpha: 0.3),
       transitionDuration: const Duration(milliseconds: 300),
       pageBuilder: (_, __, ___) => const SizedBox.shrink(),
       transitionBuilder: (_, animation, __, ___) {
@@ -55,6 +58,13 @@ class _VerticalFactoryScreenState extends State<VerticalFactoryScreen> {
     );
   }
 
+  Future<void> _signout() async {
+    await storage.deleteAll();
+
+    if (!mounted) return;
+    Navigator.pushReplacementNamed(context, '/signin');
+  }
+
   @override
   Widget build(BuildContext context) {
     // NOTE(hajae): Scaffold -> Layout (전체 페이지 틀)
@@ -69,6 +79,9 @@ class _VerticalFactoryScreenState extends State<VerticalFactoryScreen> {
           color: Colors.black,
         ),
         flexibleSpace: const AppBarBottomBorder(),
+        actions: [
+          IconButton(icon: const Icon(Icons.logout), onPressed: _signout),
+        ],
       ),
       body: Center(
         child: Column(
